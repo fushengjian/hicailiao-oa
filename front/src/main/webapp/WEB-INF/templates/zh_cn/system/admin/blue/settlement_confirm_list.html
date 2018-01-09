@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")'/>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/common/css/jquery-ui-1.8.22.custom.css")'/>
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery-ui-1.8.21.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.zh.cn.js")'></script>
+<script>
+jQuery(document).ready(function(){
+	//日期插件
+	var datepicker_CurrentInput;
+	jQuery.datepicker.setDefaults({
+		showButtonPanel: true,
+		closeText: '清除',
+		beforeShow: function(input, inst) {
+			datepicker_CurrentInput = input;
+		}
+	});
+	jQuery.datepicker._gotoToday = function(id) {
+		$(id).datepicker('setDate', new Date()).datepicker('hide').blur();
+	};
+	jQuery(".ui-datepicker-close").live("click", function() {
+		datepicker_CurrentInput.value = "";
+	});
+
+	jQuery('#addTime').datepicker({
+		dateFormat:"yy-mm-dd",
+		changeMonth: true,
+		changeYear: true
+	});
+
+	jQuery('#orderTime').datepicker({
+		dateFormat:"yy-mm-dd",
+		changeMonth: true,
+		changeYear: true
+	});
+});
+
+function settlement_confirm(id, audit_status, obj){
+	var time = jQuery(obj).attr("time");
+	var status = jQuery(obj).text();
+	if(status && confirm(status + "通过，日期为：" + time.substr(0, 10) + "，的结算单。")) {
+		jQuery.ajax({
+			type: 'POST',
+			url: '$!webPath/admin/settlement_confirm_save.htm',
+			data: {
+				"id": id,
+				"audit_status": audit_status
+			},
+			success: function (data) {
+				alert(data);
+				window.location.reload();
+			}
+		});
+	}
+}
+</script>
+<style>
+.allshop_table td {
+	border: 1px solid #EEEEEE;
+}
+.allshop_table a{
+	color: #2A7AD2;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+</style>
+</head>
+<body>
+<div class="cont">
+	<h1 class="seth1">订单结算中心</h1>
+	<div class="settab">
+		<span class="tab-one"></span>
+		<span class="tabs">
+			<a href="javascript:void(0);" class="this">结算单审核列表</a>
+		</span>
+		<span class="tab-two"></span>
+	</div>
+	<form action="$!webPath/admin/settlement_confirm.htm" method="post" id="queryForm" >
+		<div class="orders">
+			<ul>
+				<li style="float: left; margin-left:10px; margin-bottom:5px;">
+					<span>结算单日期</span>
+					<span class="order_input size2">
+						<input name="addTime" type="text" id="addTime" value="$!addTime" readonly="readonly"/>
+					</span>
+					<span class="btn_search">
+						<input type="submit"  value="搜索" style="cursor:pointer;"/>
+					</span>
+				</li>
+				<li style="float:left; margin-left:10px;">
+					<span style="width: 12px;height: 27px;font-size: 14px; color: red">
+						&nbsp&nbsp注：每页只显示一张结算单
+					</span>
+				</li>
+			</ul>
+		</div>
+	</form>
+	<form action="$!webPath/admin/settlement_confirm.htm" method="post" id="ListForm" name="ListForm">
+		<div class="allshop_table">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="border" style="background: #if($!config.websiteCss=='blue') #2A7AD2 #end
+					#if($!config.websiteCss=='black')#333 #end; height:30px; color:#FFF; text-align: center">
+					<td width="8%">结算单日期</td>
+					<td width="10%">店铺名称</td>
+					<td width="8%">支付方式</td>
+					<td width="10%">总金额（￥）</td>
+					<td width="5%">订单数量</td>
+					<td width="8%">明细</td>
+					<td width="5%">同意</td>
+					<td width="5%">不同意</td>
+					#foreach($obj in $objs)
+						#set($size = 0)
+						#foreach($list in $obj.settlementItemMap.values())
+							#set($size = $list.size() + $size)
+						#end
+						#set($count = 1)
+						#foreach($key in $obj.settlementItemMap.keySet())
+							#foreach($!item in $obj.settlementItemMap.get($!key))
+								<tr style="text-align: center">
+									<td rowspan="$size" #if($count != 1) style="display: none" #end>$!CommUtil.formatShortDate($!obj.addTime)</td>
+									<td rowspan="$obj.settlementItemMap.get($!key).size()" #if($velocityCount != 1) style="display: none" #end>$!key.store_name</td>
+									<td>$!item.payment.name</td>
+									<td>$!item.totalPrice</td>
+									<td>$!item.order_count</td>
+									<td>
+										<a href="$!webPath/admin/settlement_detail.htm?id=$!item.id" target="_blank">
+											点击查看
+										</a>
+									</td>
+									#if ($!obj.audit_status == 0)
+										#set($status = "未申请")
+									#end
+									#if ($!obj.audit_status == 1)
+										#set($status = "审核成功")
+									#end
+									#if ($!obj.audit_status == 2)
+										#set($status = "申请中")
+									#end
+									#if ($!obj.audit_status == -1)
+										#set($status = "审核失败")
+									#end
+									<td rowspan="$size" #if($count != 1) style="display: none" #end>
+										<a href="javascript:void(0)" time="$!obj.addTime" onclick="settlement_confirm('$!obj.id', 1, this);">同意</a>
+									</td>
+									<td rowspan="$size" #if($count != 1) style="display: none" #end>
+										<a href="javascript:void(0)" time="$!obj.addTime" onclick="settlement_confirm('$!obj.id', -1, this);">不同意</a>
+									</td>
+								</tr>
+								#set($count = $count + 1)
+							#end
+						#end
+					#end
+			</table>
+		</div>
+		<div class="fenye">
+			<input name="addTime" type="hidden" value="$!addTime"/>
+			<input name="orderTime" type="hidden" value="$!orderTime"/>
+			<input name="audit_status" type="hidden" value="$!audit_status"/>
+			<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage"/>
+			$!gotoPageFormHTML
+		</div>
+	</form>
+</div>
+</body>
+</html>

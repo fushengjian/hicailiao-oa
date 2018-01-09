@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")' />
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/common/css/jquery-ui-1.8.22.custom.css")' />
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.validate.min.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.poshytip.min.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery-ui-1.8.21.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.zh.cn.js")'></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+});
+ function doCheckout(id){
+	    if(confirm('确定要操作吗?')){
+		   jQuery.ajax({type:'POST',url:'$!webPath/admin/doCheckout.htm',dataType:'json',data:{"mulitId":id},
+				success:function(json){
+					  var flag=true;
+					 for(var key in json){
+// 					       alert(key+"-----"+json[key]);
+                        if(json[key]==0){
+                        	alert("订单号为"+key+"的订单结算失败，请重新结算");
+                        	flag=false;
+                        }
+					 }
+					  if(flag){
+						  alert("结算完成");
+					  }
+					  var url="$!webPath/admin/order_checkout_list.htm";
+					  jQuery("#ListForm").attr("action",url);
+					  jQuery("#ListForm").submit();
+					 }
+
+			  });
+
+			 }
+ }
+
+ function doAllCheckout(){
+
+		var mulitId="";
+		jQuery(":checkbox:checked").each(function(){
+		  if(jQuery(this).val()!=""){
+		    mulitId=mulitId+","+jQuery(this).val();
+		  }
+		});
+		if(mulitId!=""){
+			  jQuery.ajax({type:'POST',url:'$!webPath/admin/doCheckout.htm',dataType:'json',data:{"mulitId":mulitId},
+					success:function(json){
+						  var flag=true;
+						 for(var key in json){
+//	 					       alert(key+"-----"+json[key]);
+	                        if(json[key]==0){
+	                        	alert("订单号为"+key+"的订单结算失败，请重新结算");
+	                        	flag=false;
+	                        }
+						 }
+						  if(flag){
+							  alert("结算完成");
+						  }
+						  var url="$!webPath/admin/order_checkout_list.htm";
+						  jQuery("#ListForm").attr("action",url);
+						  jQuery("#ListForm").submit();
+						 }
+
+				  });
+
+		}else{
+	       alert("至少选择一条数据记录");
+		}
+	}
+
+
+</script>
+</head>
+<body>
+
+<div class="cont">
+  <h1 class="seth1">订单管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="javascript:void(0);" class="this">所有订单</a></span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/order_checkout_list.htm" method="post" id="queryForm" >
+  <div class="orders">
+    <ul>
+      <li style="float:left" >
+      </span><span>类型</span><span>
+        <select name="type" id="type">
+          <option value="store"  #if($!type=="store") selected="selected" #end >店铺名称</option>
+          <option value="buyer" #if($!type=="buyer") selected="selected" #end >买家名称</option>
+          <option value="order" #if($!type=="order") selected="selected" #end >订单号</option>
+        </select>
+        </span> <span class="order_input size1">
+        <input name="type_data" type="text" id="type_data" value="$!type_data" />
+      </span> <span>支付方式</span><span>
+        <select name="payment" id="payment">
+          <option value="">所有支付方式</option>
+          <option value="alipay" #if($!payment=="alipay") selected="selected" #end >支付宝</option>
+          <option value="chinabank"  #if($!payment=="chinabank") selected="selected" #end>网银在线</option>
+          <option value="bill" #if($!payment=="bill") selected="selected" #end>快钱</option>
+          <option value="tenpay" #if($!payment=="tenpay") selected="selected" #end>财付通</option>
+          <option value="outline" #if($!payment=="outline") selected="selected" #end>线下支付</option>
+          <option value="balance"  #if($!payment=="balance") selected="selected" #end>预付款支付</option>
+           <option value="union" #if($!payment=="union") selected="selected" #end>银联在线</option>payment
+        </select>
+        </span></li>
+      <li style="float: left;  margin-left: 42px;  margin-bottom: 5px;"> <span>下单时间</span><span class="order_input size2">
+        <input name="beginTime" type="text" id="beginTime" value="$!beginTime"  readonly="readonly"/>
+        </span><span>—</span><span class="order_input size2">
+        <input name="endTime" type="text" id="endTime" value="$!endTime"  readonly="readonly" />
+        </span> <span>订单金额</span><span class="order_input size2">
+        <input name="begin_price" type="text" id="begin_price"  value="$!begin_price"  />
+        </span><span>—</span><span class="order_input size2">
+        <input name="end_price" type="text" id="end_price" value="$!end_price"  />
+        </span> <span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;"/>
+      </span> </li>
+    </ul>
+  </div>
+  </form>
+  <form action="$!webPath/admin/order_checkout_list.htm" method="post" id="ListForm" name="ListForm" >
+    <div class="allshop_table">
+
+     <input name="mulitId" type="hidden" id="mulitId" />
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr  style="height:40px">
+	<td><input  name="all" type="checkbox" id="all" value="" onclick="selectAll(this)" >&nbsp;全选&nbsp;    <span class="btn_search"> <input type="button"  value="结算" onclick="doAllCheckout()" style="cursor:pointer;">  </span></td>
+	</tr>
+      <tr style="background: #if($!config.websiteCss=='blue') #2A7AD2 #end
+      #if($!config.websiteCss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="15%">店铺名称</td>
+        <td width="15%">订单号</td>
+        <td width="10%">买家名称</td>
+        <td  width="15%">下单时间</td>
+        <td  width="8%">订单总额</td>
+        <td width="10%">支付方式</td>
+        <td width="8%">订单状态</td>
+        <td width="8%">结算状态</td>
+        <td align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td> <input type="checkbox" value="$!obj.id" />&nbsp; $!obj.store.store_name</td>
+        <td>$!obj.order_id</td>
+        <td>$!obj.user.userName</td>
+        <td>$!CommUtil.formatLongDate($!obj.addTime)</td>
+        <td>$!obj.totalPrice</td>
+             #if($!obj.payment)
+       		 <td>$!obj.payment.name</td>
+       		 #else
+       		  <td>未支付</td>
+       		 #end
+            #if($!obj.order_status==0)
+            #set($status="已取消")
+            #end
+            #if($!obj.order_status==10)
+            #set($status="待付款")
+            #end
+            #if($!obj.order_status==15)
+            #set($status="线下支付待审核")
+            #end
+            #if($!obj.order_status==16)
+            #set($status="货到付款待发货")
+            #end
+            #if($!obj.order_status==20)
+            #set($status="已付款")
+            #end
+            #if($!obj.order_status==25)
+            #set($status="申请退款")
+            #end
+            #if($!obj.order_status==30)
+            #set($status="已发货")
+            #end
+            #if($!obj.order_status==40)
+            #set($status="已收货")
+            #end
+            #if($!obj.order_status==47)
+            #set($status="卖家确认收到退货")
+            #end
+            #if($!obj.order_status==50)
+            #set($status="已完成,已评价")
+            #end
+            #if($!obj.order_status==60)
+            #set($status="已结束")
+            #end
+            #if($!obj.order_status==70)
+            #set($status="退款成功")
+            #end
+        <td>$!status</td>
+          #set($checkout_status="未结算")
+          #if($!obj.checkout_status==1)
+          #set($checkout_status="已结算")
+          #end
+          <td>$!checkout_status</td>
+        <td align="center" class="blue xiahua"> #if($!obj.checkout_status!=1)<a href="javascript:void(0);" onclick="doCheckout($!obj.id)">结算</a>  #end <a href="$!webPath/admin/order_checkout_view.htm?id=$!obj.id">查看</a></td>
+      </tr>
+     #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="end_price" type="hidden" id="end_price" value="$!end_price" />
+    <input name="begin_price" type="hidden" id="begin_price" value="$!begin_price" />
+    <input name="endTime" type="hidden" id="endTime" value="$!endTime" />
+    <input name="beginTime" type="hidden" id="beginTime" value="$!beginTime" />
+    <input name="type_data" type="hidden" id="type_data" value="$!type_data" />
+    <input name="type" type="hidden" id="type" value="$!type" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+       <input name="payment" type="hidden" id="payment" value="$!payment" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

@@ -23,7 +23,7 @@ import com.tomowork.oa.domain.IdEntity;
 @Cacheable
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "shop_sysconfig")
+@Table(name = "oa_sysconfig")
 public class SysConfig extends IdEntity {
 
 	private static final long serialVersionUID = 5705324940568205634L;

@@ -3,7 +3,7 @@ package com.tomowork.oa.view.web.tools;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import com.tomowork.shop.core.tools.CommUtil;
+import com.tomowork.oa.core.tools.CommUtil;
 
 public class MoneyUtil {
 	public String getFormatMoney(Object money, int scale, double divisor) {

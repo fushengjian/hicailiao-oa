@@ -20,7 +20,7 @@ import com.tomowork.oa.domain.IdEntity;
 @Cacheable
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "role")
+@Table(name = "oa_role")
 public class Role extends IdEntity implements Comparable {
 	private String roleName;
 

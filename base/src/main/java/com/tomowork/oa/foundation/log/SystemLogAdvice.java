@@ -18,6 +18,12 @@ import com.tomowork.oa.annotation.Log;
 import com.tomowork.oa.annotation.LogType;
 import com.tomowork.oa.core.security.support.SecurityUserHolder;
 import com.tomowork.oa.core.tools.CommUtil;
+import com.tomowork.oa.foundation.domain.LogFieldType;
+import com.tomowork.oa.foundation.domain.SysLog;
+import com.tomowork.oa.foundation.service.AccessoryService;
+import com.tomowork.oa.foundation.service.RoleService;
+import com.tomowork.oa.foundation.service.SysLogService;
+import com.tomowork.oa.foundation.service.UserService;
 
 @Aspect
 @Component

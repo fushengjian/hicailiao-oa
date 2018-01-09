@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")' />
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.validate.min.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.poshytip.min.js")'></script>
+<script>
+function saveForm(){
+  jQuery("#theForm").submit();
+}
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">缓存管理</h1>
+  <form name="theForm" id="theForm" action="$!webPath/admin/update_cache.htm" method="post">
+    <div class="setcont">
+      <ul class="set1">
+        <li>数据缓存:$!{data_cache_size}</li>
+        <li>页面缓存：$!{page_cache_size}</li>
+        <li>缓存占用内存：$!CommUtil.div($!{cache_memory_size},1024) M</li>
+      </ul>
+      <ul class="set1">
+        <li>数据缓存</li>
+        <li><span class="webname">
+          <input name="data_cache" type="checkbox" id="data_cache"  style="border:none; width:20px; height:20px;" title="选择" value="true"/>
+          </span><span id="nothis"><strong class="q"></strong><strong class="w">数据缓存清空后系统将会即时同步数据库</strong><strong class="c"></strong></span></li>
+      </ul>
+      <ul class="set1">
+        <li>页面缓存</li>
+        <li><span class="webname">
+          <input name="page_cache" type="checkbox" id="page_cache"  style="border:none; width:20px; height:20px;" title="选择" value="true"/>
+          </span><span id="nothis"><strong class="q"></strong><strong class="w">页面缓存清空后系统将会即时加载最新页面</strong><strong class="c"></strong></span></li>
+      </ul>
+    </div>
+    <div class="submit">
+      <input name="save" type="button" value="更新缓存" onclick="saveForm()" />
+    </div>
+  </form>
+</div>
+</body>
+</html>

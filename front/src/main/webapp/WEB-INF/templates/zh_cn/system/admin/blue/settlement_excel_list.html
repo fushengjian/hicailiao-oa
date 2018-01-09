@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")'/>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/common/css/jquery-ui-1.8.22.custom.css")'/>
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery-ui-1.8.21.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.zh.cn.js")'></script>
+<script>
+jQuery(document).ready(function(){
+	var datepicker_CurrentInput;
+	jQuery.datepicker.setDefaults({
+		showButtonPanel: true,
+		closeText: '清除',
+		beforeShow: function(input, inst) {
+			datepicker_CurrentInput = input;
+		}
+	});
+	jQuery.datepicker._gotoToday = function(id) {
+		$(id).datepicker('setDate', new Date()).datepicker('hide').blur();
+	};
+	jQuery(".ui-datepicker-close").live("click", function() {
+		datepicker_CurrentInput.value = "";
+	});
+
+	jQuery('#addTime').datepicker({
+		dateFormat:"yy-mm-dd",
+		changeMonth: true,
+		changeYear: true
+	});
+
+	jQuery('#orderTime').datepicker({
+		dateFormat:"yy-mm-dd",
+		changeMonth: true,
+		changeYear: true
+	});
+
+	/*生成EXCEL表下载链接*/
+	$(function() {
+		var id;
+		var payment = [];
+		jQuery("td[payment_mark]").each(function (index, element) {
+			id = jQuery(element).attr("settlement");
+			var payment_mark = jQuery(element).attr("payment_mark");
+			var payment_name = jQuery(element).attr("payment_name");
+			payment[payment_mark] = payment_name;
+		});
+		for(var key in payment){
+			jQuery("#excel").append("<a href='$!webPath/admin/settlement_execute_excel.htm?id=" + id + "&payment_mark="
+					+ key + "'" + "style='display: block;margin: 15px 15px;'>点击下载" + payment[key] + "EXCEL结算单</a>");
+		}
+	})
+});
+</script>
+<style>
+.allshop_table td {
+	border: 1px solid #EEEEEE;
+}
+.allshop_table a{
+	color: #2A7AD2;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+</style>
+</head>
+<body>
+<div class="cont">
+	<h1 class="seth1">订单结算中心</h1>
+	<div class="settab">
+		<span class="tab-one"></span>
+		<span class="tabs">
+			<a href="javascript:void(0);" class="this">结算单生成EXCEL列表</a>
+		</span>
+		<span class="tab-two"></span>
+	</div>
+	<form action="$!webPath/admin/settlement_excel.htm" method="post" id="queryForm" >
+		<div class="orders">
+			<ul>
+				<li style="float: left; margin-left:10px; margin-bottom:5px;">
+					<span>结算单日期</span>
+					<span class="order_input size2">
+						<input name="addTime" type="text" id="addTime" value="$!addTime" readonly="readonly"/>
+					</span>
+					<span class="btn_search">
+						<input type="submit"  value="搜索" style="cursor:pointer;"/>
+					</span>
+				</li>
+				<li style="float:left; margin-left:10px;">
+					<span style="width: 12px;height: 27px;font-size: 14px; color: red">
+						&nbsp&nbsp注：每页只显示一张结算单
+					</span>
+				</li>
+			</ul>
+		</div>
+	</form>
+	<form action="$!webPath/admin/settlement_excel.htm" method="post" id="ListForm" name="ListForm">
+		<div class="allshop_table">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr class="border" style="background: #if($!config.websiteCss=='blue') #2A7AD2 #end
+					#if($!config.websiteCss=='black')#333 #end; height:30px; color:#FFF; text-align: center">
+					<td width="8%">结算单日期</td>
+					<td width="10%">店铺名称</td>
+					<td width="8%">支付方式</td>
+					<td width="10%">总金额（￥）</td>
+					<td width="5%">订单数量</td>
+					<td width="8%">明细</td>
+					<td width="10%">生成EXCEL表</td>
+					#foreach($obj in $objs)
+						#set($size = 0)
+						#foreach($list in $obj.settlementItemMap.values())
+							#set($size = $list.size() + $size)
+						#end
+						#set($count = 1)
+						#foreach($key in $obj.settlementItemMap.keySet())
+							#foreach($!item in $obj.settlementItemMap.get($!key))
+								<tr style="text-align: center">
+									<td rowspan="$size" #if($count != 1) style="display: none" #end>$!CommUtil.formatShortDate($!obj.addTime)</td>
+									<td rowspan="$obj.settlementItemMap.get($!key).size()" #if($velocityCount != 1) style="display: none" #end>$!key.store_name</td>
+									<td settlement="$!obj.id" payment_mark="$!item.payment.mark" payment_name="$!item.payment.name">$!item.payment.name</td>
+									<td>$!item.totalPrice</td>
+									<td>$!item.order_count</td>
+									<td>
+										<a href="$!webPath/admin/settlement_detail.htm?id=$!item.id" target="_blank">
+											点击查看
+										</a>
+									</td>
+									<td id="excel" rowspan="$size" #if($count != 1) style="display: none" #end></td>
+								</tr>
+								#set($count = $count + 1)
+							#end
+						#end
+					#end
+			</table>
+		</div>
+		<div class="fenye">
+			<input name="addTime" type="hidden" value="$!addTime"/>
+			<input name="orderTime" type="hidden" value="$!orderTime"/>
+			<input name="audit_status" type="hidden" value="$!audit_status"/>
+			<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage"/>
+			$!gotoPageFormHTML
+		</div>
+	</form>
+</div>
+</body>
+</html>

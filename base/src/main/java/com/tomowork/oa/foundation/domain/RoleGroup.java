@@ -16,7 +16,7 @@ import com.tomowork.oa.domain.IdEntity;
 @Cacheable
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "rolegroup")
+@Table(name = "oa_rolegroup")
 public class RoleGroup extends IdEntity {
 	private String name;
 

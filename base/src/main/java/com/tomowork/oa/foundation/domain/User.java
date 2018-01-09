@@ -26,7 +26,7 @@ import com.tomowork.oa.domain.IdEntity;
 @Cacheable
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "user")
+@Table(name = "oa_user")
 public class User extends IdEntity {
 	private static final long serialVersionUID = 8026813053768023527L;
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tools>
+	<toolbox scope="request">
+		<tool class="org.apache.velocity.tools.view.ImportTool" />
+		<tool class="com.tomowork.shop.velocity.tools.view.LinkTool" key="frontlink" uriFactoryKey="frontUriFactory" />
+		<tool class="com.tomowork.shop.velocity.tools.view.LinkTool" key="assetslink" uriFactoryKey="assetsUriFactory" />
+		<tool class="com.tomowork.shop.velocity.tools.view.LinkTool" key="imagelink" uriFactoryKey="imageUriFactory" />
+	</toolbox>
+</tools>

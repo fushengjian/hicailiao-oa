@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	#macro ( genericTree $somelist )
+		#foreach ( $some in $somelist )
+			<option value="$!some.id">#if($!some.level>0)
+				#foreach($count in [0..$!some.level])&nbsp;#end #end $!some.className</option>
+			#genericTree($some.childs)
+		#end
+	#end
+	<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")' />
+	<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/common/css/jquery-ui-1.8.22.custom.css")' />
+	<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+	<script src='$!assetslink.absolute("/resources/js/jquery-ui-1.8.21.js")'></script>
+	<script src='$!assetslink.absolute("/resources/js/jquery.poshytip.min.js")'></script>
+	<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+	<script src='$!assetslink.absolute("/resources/js/jquery.validate.min.js")'></script>
+	<script src='$!assetslink.absolute("/resources/js/jquery.zh.cn.js")'></script>
+	<script>
+		function saveForm(){
+			var store_status = jQuery("#store_status").val()
+			if (store_status == "") {
+				alert("请选择店铺审核状态'通过'或'拒绝'");
+			} else {
+				jQuery("#theForm").submit();
+			}
+		}
+	</script>
+</head>
+<body>
+<div class="cont">
+	<h1 class="seth1">店铺信息变更审核</h1>
+	<div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/store_list.htm" >管理</a> | <a href="$!webPath/admin/store_add.htm">新增</a>|<a href="$!webPath/admin/store_gradelog_list.htm">升级申请</a><a href="$!webPath/admin/store_information_change_audit.htm?id=$!obj.id" class="this">审核</a></span> <span class="tab-two"></span></div>
+	<form name="theForm" id="theForm" action="$!webPath/admin/store_information_change_audit_save.htm" method="post">
+		<input name="smc_id" type="hidden" id="smc_id" value="$!obj.id" />
+		<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+		<input name="list_url" type="hidden" id="list_url" value="$!webPath/admin/store_list.htm" />
+		<input name="add_url" type="hidden" id="add_url" value="$!webPath/admin/store_add.htm" />
+		<div class="setcont">
+			<!--鼠标经过样式-->
+			<ul class="set1">
+				<li><strong class="orange fontsize20">*</strong>会员名</li>
+				<li>
+					<span class="webname">$!obj.user.userName</span>
+				</li>
+			</ul>
+			<ul class="set1">
+				<li><strong class="orange fontsize20">*</strong>店主姓名</li>
+				<li><span class="webname">$!obj.store.store_ower</span></li>
+			</ul>
+			<ul class="set1">
+				<li>店主身份证号</li>
+				<li><span class="webname">$!obj.store.store_ower_card</span></li>
+			</ul>
+			<ul class="set1">
+				<li><strong class="orange fontsize20">*</strong>店铺名称</li>
+				<li>
+					#if($!obj.store_name)
+						<span class="webname">
+						<input value="$!obj.store_name" size="35" autocomplete="off"  readonly="readonly"/>
+					</span>
+						<span class="webname">变更前：<input value="$!obj.store.store_name" autocomplete="off"  readonly="readonly"/></span>
+					#else
+						<span class="webname"><input value="$!obj.store.store_name" autocomplete="off"  readonly="readonly"/></span>
+					#end
+				</li>
+			</ul>
+			<ul class="set1">
+				<li><strong class="orange fontsize20">*</strong>店铺分类</li>
+				<li><span class="webnamesec sizese">$!obj.store.sc.className</span></li>
+			</ul>
+			<ul class="set1">
+				<li><strong class="orange fontsize20">*</strong>所在地区</li>
+				<li><span class="webnamesec sizese">$!area_info</span></li>
+			</ul>
+			<ul class="set1">
+				<li>详细地址</li>
+				<li>
+					#if($!obj.store_address)
+						<span class="webname">
+						<input value="$!obj.store_address" size="35" autocomplete="off"  readonly="readonly"/>
+					</span>
+						<span class="webname">变更前：<input value="$!obj.store.store_address" autocomplete="off"  readonly="readonly"/></span>
+					#else
+						<span class="webname"><input value="$!obj.store.store_address" autocomplete="off"  readonly="readonly"/></span>
+					#end
+				</li>
+			</ul>
+			<ul class="set1">
+				<li>邮政编码</li>
+				<li> <span class="webname">$!obj.store.store_zip</span></li>
+			</ul>
+			<ul class="set1">
+				<li>联系电话</li>
+				<li>
+					#if($!obj.store_telephone)
+						<span class="webname">
+						<input value="$!obj.store_telephone" size="35" autocomplete="off"  readonly="readonly"/>
+					</span>
+						<span class="webname">变更前：<input value="$!obj.store.store_telephone" autocomplete="off"  readonly="readonly"/></span>
+					#else
+						<span class="webname"><input value="$!obj.store.store_telephone" autocomplete="off"  readonly="readonly"/></span>
+					#end
+				</li>
+			</ul>
+			<ul class="set1">
+				<li>QQ号码</li>
+				<li>
+					#if($!obj.store_qq)
+						<span class="webname">
+						<input value="$!obj.store_qq" size="35" autocomplete="off"  readonly="readonly"/>
+					</span>
+						<span class="webname">变更前：<input value="$!obj.store.store_qq" autocomplete="off"  readonly="readonly"/></span>
+					#else
+						<span class="webname"><input value="$!obj.store.store_qq" autocomplete="off"  readonly="readonly"/></span>
+					#end
+				</li>
+			</ul>
+			<ul class="set1">
+				<li><strong class="orange fontsize20">*</strong>店铺审核状态</li>
+				<li>
+					<span class="webnamesec sizese">
+						<select name="store_status" id="store_status" onchange="switch_store_status();">
+							<option value="" selected="selected">请选择审核状态</option>
+							<option value="2">通过</option>
+							<option value="-1">拒绝</option>
+						</select>
+					</span>
+				</li>
+			</ul>
+			<script>
+				function switch_store_status(){
+					var status=jQuery("#store_status").val();
+					if(status=="3"){
+						jQuery("#violation_reseaon_ul").show();
+					}else jQuery("#violation_reseaon_ul").hide();
+				}
+				function change_store_recommend(){
+					var recommend=jQuery("#store_recommend").val();
+					if(recommend=="true"){
+						jQuery("#store_recommend_img").attr("src",'$!assetslink.absolute("/resources/style/system/manage/blue/images/no.jpg")');
+						jQuery("#store_recommend").val("false");
+					}else{
+						jQuery("#store_recommend_img").attr("src",'$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/images/yes.jpg")');
+						jQuery("#store_recommend").val("true");
+					}
+				}
+				function switch_ck(id){
+					var ck=jQuery("#"+id+"_ck").attr("checked");
+					if(ck=="checked"){
+						jQuery("#"+id).val("true");
+					}else jQuery("#"+id).val("false");
+				}
+			</script>
+			<ul class="set1">
+				<li>认证情况
+					<input type="hidden" name="card_approve" id="card_approve" value="$!obj.card_approve" />
+					<input type="hidden" name="realstore_approve" id="realstore_approve" value="$!obj.realstore_approve" />
+				</li>
+				<li style="margin-left:20px;">
+					<input name="card_approve_ck" style="float: left;" type="checkbox" id="card_approve_ck" onclick="switch_ck('card_approve')" #if($!obj.card_approve) checked="checked"#end/>
+					<p>实名认证更改信息</p>
+					#if($!obj.card)
+					<dl style="width: 221px;float:left; margin-right: 10px;">
+						<dt><img src="$!imagelink.absolute($!obj.card.url)" width="221" height="154"/></dt>
+						<dd>认证审核中[<a href="$!imagelink.absolute($!obj.card.url)" target="_blank">查看认证文件(身份证正面)</a>]</dd>
+					</dl>
+					#end
+					#if($!obj.card_side)
+						<dl style="width: 221px;float:left; margin-right: 10px;">
+							<dt><img src="$!imagelink.absolute($!obj.card_side.url)" width="221" height="154"/></dt>
+							<dd>认证审核中[<a href="$!imagelink.absolute($!obj.card_side.url)" target="_blank">查看认证文件(身份证反面)</a>]</dd>
+						</dl>
+					#end
+					#if($!obj.card_hand)
+						<dl style="width: 221px;float:left; margin-right: 10px;">
+							<dt><img src="$!imagelink.absolute($!obj.card_hand.url)" width="221" height="154"/></dt>
+							<dd>认证审核中[<a href="$!imagelink.absolute($!obj.card_hand.url)" target="_blank">查看认证文件(手执身份证)</a>]</dd>
+						</dl>
+					#end
+				</li>
+				<li style="margin-left:20px;">
+					<input name="realstore_approve_ck" type="checkbox" id="realstore_approve_ck" onclick="switch_ck('realstore_approve')" #if($!obj.realstore_approve) checked="checked"#end />
+					实体店铺认证更改信息
+					#if($!obj.store_license)
+					<dl>
+						<dt><img src="$!imagelink.absolute($!obj.store_license.url)" width="288" height="216"/></dt>
+						<dd>认证审核中
+							[<a href="$!imagelink.absolute($!obj.store_license.url)" target="_blank">查看认证文件</a>]
+						</dd>
+					</dl>
+					#end
+				</li>
+			</ul>
+			<ul class="set1">
+				<li>审核理由</li>
+				<li>
+					<span class="webname sizese">
+						<textarea name="audit_reason" cols="40" rows="4" id="audit_reason"></textarea>
+					</span>
+				</li>
+			</ul>
+		</div>
+	</form>
+	<div class="submit">
+		<input name="save" type="button" value="提交" onclick="saveForm()" />
+	</div>
+</div>
+</body>
+</html>

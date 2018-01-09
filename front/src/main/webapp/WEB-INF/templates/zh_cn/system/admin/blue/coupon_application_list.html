@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+#macro ( genericTree $somelist )
+#foreach ( $some in $somelist )
+<option value="$!some.id">
+#if($!some.level>0)
+#foreach($count in [-1..$!some.level])&nbsp;#end #end $!some.className</option>
+#genericTree($some.childs)
+#end
+#end
+<!--[if IE]>
+<style type="text/css">
+.input{behavior: url($!assetslink.absolute("/resources/style/common/css/ie-css3.htc"));}
+</style>
+<![endif]-->
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")' />
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+</head>
+<body scroll="yes">
+	<div class="cont">
+		<h1 class="seth1">优惠券申请审核列表</h1>
+	</div>
+	<form name="queryForm" id="queryForm" action="$!webPath/admin/coupon_application_list.htm" method="post">
+		<div class="allmem_search">
+			<ul>
+				<li>
+					<span>优惠券名称</span>
+					<span class="allmen size4">
+						<input name="coupon_name" type="text" id="coupon_name" value="$!coupon_name"/>
+					</span>
+					<span>优惠券所属店家</span>
+					<span class="allmen size4">
+						<input name="store_name" type="text" id="store_name" value="$!store_name"/>
+					</span>
+					<span>优惠券类型</span>
+					<span>
+						<select name="coupon_type">
+							<option value="">请选择</option>
+							<option value="GLOBAL" #if($!coupon_type=="GLOBAL") selected=selected" #end>全局券</option>
+							<option value="GLOBAL_CLASS" #if($!coupon_type=="GLOBAL_CLASS") selected=selected" #end>全局分类券</option>
+							<option value="STORE" #if($!coupon_type=="STORE") selected=selected" #end>店铺券</option>
+							<option value="STORE_CLASS" #if($!coupon_type=="STORE_CLASS") selected=selected" #end>店铺分类券</option>
+						</select>
+					</span>
+					<span class="btn_search">
+						<input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+					</span>
+				</li>
+			</ul>
+		</div>
+	</form>
+	<form name="ListForm" id="ListForm" action="" method="post">
+		<div class="brandtable">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="brand_table">
+				<tr style="background: #if($!config.websiteCss=='blue') #2A7AD2 #end #if($!config.websiteCss=='black')#333 #end; height:30px; color:#FFF">
+					<td width="1%">&nbsp;</td>
+					<td width="30%">优惠券名称</td>
+					<td width="30%">优惠券所属店家</td>
+					<td width="30%">优惠券类型</td>
+					<td width="30%" align="center">操作</td>
+				</tr>
+				#foreach($obj in $objs)
+					<tr>
+						<td align="center">&nbsp;</td>
+						<td>$!obj.coupon_name</td>
+						<td>$!obj.store.store_name</td>
+						#if($!obj.couponType=="GLOBAL")
+							#set($coupon_type="全局券")
+						#end
+						#if($!obj.couponType=="GLOBAL_CLASS")
+							#set($coupon_type="全局分类券")
+						#end
+						#if($!obj.couponType=="STORE")
+							#set($coupon_type="店铺券")
+						#end
+						#if($!obj.couponType=="STORE_CLASS")
+							#set($coupon_type="店铺分类券")
+						#end
+						<td>$!coupon_type</td>
+						<td class="ac8" align="center">
+							<a href="$!webPath/admin/coupon_application.htm?id=$!obj.id">审核</a>
+						</td>
+					</tr>
+				#end
+			</table>
+			<div class="fenye" align="right">
+				<span id="queryCondition" style="display:none">
+					#foreach($sm in $!sms)
+						<input name="$!sm.key" id="$!sm.key" type="hidden" value="$!sm.value"/>
+					#end
+				</span>
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+				$!gotoPageFormHTML
+			</div>
+		</div>
+	</form>
+</body>
+</html>

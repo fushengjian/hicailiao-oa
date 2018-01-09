@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")' />
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">支付方式</h1>
+  <div class="paytable" id="platform">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="pay_table">
+      <thead>
+      <tr style="background: #if($!config.websiteCss=='blue') #2A7AD2 #end
+      #if($!config.websiteCss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="150">支付方式名称</td>
+        <td width="590" align="center">支付方式描述</td>
+        <td width="120" align="center">启用</td>
+        <td width="230" align="center">操作</td>
+      </tr>
+      </thead>
+      <tbody>
+      #foreach($p in $paymentTypes)
+        <tr>
+          <td>$!p.name</td>
+          <td align="left">$!p.description</td>
+          <td align="center">#if($!p.enabled)是#else 否#end</td>
+          <td align="center" class="ac8">#if($!p.enabled)<a href="$!webPath/admin/payment_set.htm?mark=$!p.mark&type=admin&pay=false">禁用</a>#else<a href="$!webPath/admin/payment_set.htm?mark=$!p.mark&type=admin&pay=true">启用</a>#end|<a href="$!webPath/admin/payment_edit.htm?mark=$!p.mark&type=admin">编辑</a></td>
+        </tr>
+      #end
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+jQuery(document).ready(function(){
+	jQuery("a[id^=pay_]").click(function(){
+	  	var id = jQuery(this).attr("id");
+		var css = jQuery(this).attr("class");
+		if(css=="this") return false;
+	jQuery.each(jQuery("a[id^=pay_]"), function(){
+		if(jQuery(this).attr("id")==id){
+			jQuery(this).addClass("this");
+			var pid = "#"+jQuery(this).attr("id").substring(4);
+			jQuery(pid).show();
+		}else{
+			jQuery(this).removeClass("this");
+			var pid = "#"+jQuery(this).attr("id").substring(4);
+			jQuery(pid).hide();
+		}
+		})
+	})
+	#if($!op)
+	  jQuery.each(jQuery("a[id^=pay_]"), function(){
+	    var pid = "#"+jQuery(this).attr("id").substring(4);
+	    jQuery(pid).hide();
+	  })
+	  jQuery("a[id^=pay_]").removeClass("this");
+	  jQuery("#pay_$!op").addClass("this");
+	  jQuery("#$!op").show();
+	#end
+
+  jQuery("img[id='config_payment_type']").click(function(){
+     var type = jQuery("#config_payment_type").val();
+	 if(type=="0"){
+		jQuery("#config_payment_type").val("1");
+		jQuery("img[id='config_payment_type']").attr("src",'$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/images/on.jpg")');
+	}else{
+		jQuery("#config_payment_type").val("0");
+		jQuery("img[id='config_payment_type']").attr("src",'$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/images/off.jpg")');
+	}
+  });
+  #if($!config.config_payment_type=="0")
+  jQuery("#config_payment_type").val("0");
+  jQuery("img[id='config_payment_type']").attr("src",'$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/images/off.jpg")');
+  #else
+  jQuery("#config_payment_type").val("1");
+  jQuery("img[id='config_payment_type']").attr("src",'$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/images/on.jpg")');
+  #end
+  //
+  jQuery("span .w").mousemove(function(){
+	var id=jQuery(this.parentNode).attr("id");
+	if(id="nothis"){
+	   jQuery(this.parentNode).attr("id","this")
+	}
+  }).mouseout(function(){
+     var id=jQuery(this.parentNode).attr("id");
+	 if(id="this"){
+	   jQuery(this.parentNode).attr("id","nothis")
+	 }
+  });
+
+});
+</script>
+</body>
+</html>

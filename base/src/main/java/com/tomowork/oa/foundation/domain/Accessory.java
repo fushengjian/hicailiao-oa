@@ -20,7 +20,7 @@ import com.tomowork.oa.domain.IdEntity;
 @Cacheable
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "shop_accessory")
+@Table(name = "oa_accessory")
 public class Accessory extends IdEntity implements Serializable {
 
 	private static final long serialVersionUID = -9116685587591991837L;

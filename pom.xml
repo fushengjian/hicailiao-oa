@@ -11,6 +11,7 @@
 		<module>core</module>
 		<module>utils</module>
 		<module>base</module>
+		<module>front</module>
 	</modules>
 
 	<packaging>pom</packaging>
@@ -98,6 +99,11 @@
 	<!-- 依赖项定义 -->
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.tomowork.oa</groupId>
+				<artifactId>oa-base</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.tomowork.oa</groupId>
 				<artifactId>oa-core</artifactId>

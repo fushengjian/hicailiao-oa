@@ -14,7 +14,7 @@ import com.tomowork.oa.domain.IdEntity;
 
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "shop_syslog")
+@Table(name = "oa_syslog")
 public class SysLog extends IdEntity {
 	private String title;
 

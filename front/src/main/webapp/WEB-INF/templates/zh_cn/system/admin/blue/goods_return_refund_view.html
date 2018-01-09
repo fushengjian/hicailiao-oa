@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link rel="stylesheet" href='$!assetslink.absolute("/resources/style/system/manage/$!{config.websiteCss}/template.css")' />
+<script src='$!assetslink.absolute("/resources/js/jquery-1.6.2.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.validate.min.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.shop.common.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.poshytip.min.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery-ui-1.8.21.js")'></script>
+<script src='$!assetslink.absolute("/resources/js/jquery.zh.cn.js")'></script>
+<script>
+function dorefund(id){
+    if(confirm('确定进行退款操作吗?')){
+	   jQuery.ajax({type:'POST',url:'$!webPath/admin/goods_return_dorefund.htm',dataType:'json',data:{"id":id},
+			success:function(json){
+				  var flag=true;
+				 for(var key in json){
+//					       alert(key+"-----"+json[key]);
+                    if(json[key]==0){
+                    	alert("退款失败，请稍后再试");
+                    	flag=false;
+                    }
+				 }
+				  if(flag){
+					  alert("退款完成");
+				  }
+				  window.location.href='$!webPath/admin/order_refund_list.htm';
+				 }
+
+		  });
+
+		 }
+}
+</script>
+</head>
+<body>
+<div class="cont">
+  <div class="orderdetail">
+    <div class="orderh">订单状态</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">订单号:</span><span>$obj.of.order_id</span></li>
+        #if($!obj.of.order_status==0)
+        #set($status="已取消")
+        #end
+        #if($!obj.of.order_status==10)
+        #set($status="待付款")
+        #end
+        #if($!obj.of.order_status==15)
+        #set($status="线下支付待审核")
+        #end
+        #if($!obj.of.order_status==16)
+        #set($status="货到付款待发货")
+        #end
+        #if($!obj.of.order_status==20)
+        #set($status="已付款")
+        #end
+        #if($!obj.of.order_status==25)
+        #set($status="申请退款")
+        #end
+        #if($!obj.of.order_status==30)
+        #set($status="已发货")
+        #end
+        #if($!obj.of.order_status==40)
+        #set($status="已收货")
+        #end
+        #if($!obj.of.order_status==47)
+		#set($status="卖家确认收到退货")
+		#end
+        #if($!obj.of.order_status==50)
+        #set($status="已完成,已评价")
+        #end
+        #if($!obj.of.order_status==60)
+        #set($status="已结束")
+        #end
+        <li><span class="ordertitle"> 订单状态:</span><span>$!status</span></li>
+         <li><span class="ordertitle">运费:</span><span>¥$!CommUtil.null2Float($!{obj.of.ship_price})#if($!obj.of.transport)[$!{obj.of.transport}]#end</span></li>
+         #if($!obj.of.ci)
+         <li><span class="ordertitle"> 使用优惠券:</span><span>$!{obj.of.ci.coupon_sn}<strong style="color:#F90">[¥$!{obj.of.ci.coupon.coupon_amount}]</strong></span></li>
+         #end
+        <li><span class="ordertitle">订单总额:</span><span><strong class="orange" style="padding-right:10px;">¥$!{obj.of.totalPrice}</strong></span></li>
+      </ul>
+    </div>
+    <div class="orderh">订单详情</div>
+    <div class="orderhh">订单信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">买家名称:</span><span>$!obj.of.user.userName</span></li>
+        <li><span class="ordertitle"> 卖家名称:</span><span>$!obj.of.store.store_name</span></li>
+        #set($payment="未支付")
+        #if($!obj.of.payment.mark=="alipay")
+        #set($payment="支付宝")
+        #end
+        #if($!obj.of.payment.mark=="alipay_wap")
+        #set($payment="手机网页支付宝")
+        #end
+        #if($!obj.of.payment.mark=="tenpay")
+        #set($payment="财付通")
+        #end
+        #if($!obj.of.payment.mark=="bill")
+        #set($payment="快钱")
+        #end
+        #if($!obj.of.payment.mark=="chinabank")
+        #set($payment="网银在线")
+        #end
+        #if($!obj.of.payment.mark=="outline")
+        #set($payment="线下支付")
+        #end
+        #if($!obj.of.payment.mark=="balance")
+        #set($payment="预存款支付")
+        #end
+        #if($!obj.of.payment.mark=="payafter")
+        #set($payment="货到付款")
+        #end
+        #if($!obj.of.payment.mark=="paypal")
+        #set($payment="paypal")
+        #end
+         #if($!obj.of.payment.mark=="union")
+        #set($payment="银联在线")
+        #end
+        <li><span class="ordertitle">支付方式:</span><span>$!payment</span></li>
+        <li><span class="ordertitle">下单时间:</span><span>$!CommUtil.formatLongDate($!obj.of.addTime)</span></li>
+      </ul>
+    </div>
+    <div class="orderhhh">收货人及发货信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">收货人姓名:</span><span>$!obj.of.addr.trueName</span></li>
+        <li><span class="ordertitle">所在地区:</span><span>$!{obj.of.addr.area.parent.parent.areaName} $!{obj.addr.area.parent.areaName} $!{obj.addr.area.areaName} </span></li>
+        <li><span class="ordertitle">邮政编码:</span><span>$!{obj.of.addr.zip}</span></li>
+        <li><span class="ordertitle">电话号码:</span><span>$!{obj.of.addr.telephone}</span></li>
+        <li><span class="ordertitle">手机号码:</span><span>$!{obj.of.addr.mobile}</span></li>
+        <li><span class="ordertitle">详细地址:</span><span>$!{obj.of.addr.area_info}</span></li>
+        <li><span class="ordertitle">配送方式:</span><span>$!obj.of.ship.shipping_name</span></li>
+      </ul>
+    </div>
+    <div class="orderhhh">商品信息</div>
+    <div class="ordetable">
+      <table width="90%" border="0" cellspacing="0" cellpadding="0" class="orde_table">
+        <tr style="border-bottom:1px dotted #CCEAF4">
+          <td width="20%">&nbsp;</td>
+          <td width="50%"><strong>商品信息</strong></td>
+          <td width="10%"><strong>商品规格</strong></td>
+          <td width="10%"><strong>单价</strong></td>
+          <td width="10%"><strong>数量</strong></td>
+        </tr>
+        <tr style="border-bottom:1px dotted #CCEAF4"> #if($!obj.goods.goods_main_photo)
+          #set($img="$!imagelink.absolute($!obj.goods.goods_main_photo.smallUrl)")
+          #else
+          #set($img="$!imagelink.absolute($!config.goodsImage.url)")
+          #end
+          <td><img src="$!img" width="45" height="45" /></td>
+          <td><a href='$!frontlink.absolute("/goods_$!{obj.goods.id}.htm")' target="_blank" class="blue">$!{obj.goods.goods_name}</a>
+              #if($!{obj.goods.group_buy}==2) <span style="color:#F00">(团购)</span> #end
+              #if($!{obj.goods.delivery_status}==2) <span style="color:#F00">[买就送]</span> #end
+              #if($!{obj.goods.bargain_status}==2) <span style="color:#F00">(特价)</span> #end
+              #if($!{obj.cart_type}=="combin")
+              <div class="baby_gp">
+                <a href="javascript:void(0);" style="color:#F00;">[组合商品]</a>
+              </div>
+              #end
+          </td>
+          <td>
+
+            <li class="hui2">$!obj.spec_info</li>
+
+              </td>
+          <td><strong class="orange">¥</strong><strong style="color:#F90">#if($!obj.goods.group_buy==2)$!{obj.goods.group_goods.gg_price}#else $!{obj.goods.store_price}#end</strong></td>
+          <td>$!obj.count</td>
+        </tr>
+      </table>
+    </div>
+        <div class="orderhhh">物流信息</div>
+    <div class="orderul_record">
+      <ul>
+        #if($!transInfo.status=="1")
+          #foreach($info in $transInfo.data)
+        <li><strong>$!info.time $!info.context</strong></li>
+        #end
+         #end
+		#if($!transInfo.status=="0")
+          <li><strong style="color:#F90">$!transInfo.message</strong></li>
+		#end
+      </ul>
+    </div>
+
+
+    <div class="orderhhh">操作历史</div>
+    <div class="orderul_record">
+      <ul>
+      #foreach($ofl in $!obj.of.ofls)
+        <li><strong style="color:#F90">$!{ofl.log_user.userName}</strong>于<strong><em>$!CommUtil.formatLongDate($!ofl.addTime)</em></strong>$!ofl.log_info #if($!ofl.state_info)操作原因:<strong><em>$!{ofl.state_info}</em></strong>#end</li>
+        #end
+      </ul>
+    </div>
+   #if($!obj.of.rls && $!obj.of.rls.size()>0)
+   <div class="orderhhh">退款日志</div>
+    <div class="orderul_record">
+      <ul>
+       #foreach($rl in $!obj.of.rls)
+        <li><strong style="color:#F90">$!{rl.refund_user.userName}</strong>于<strong><em>$!CommUtil.formatLongDate($!rl.addTime)</em></strong>使用<strong><em>$!rl.refund_type</em></strong>退款<strong><em>¥$!{rl.refund}</em></strong></li>
+       #end
+      </ul>
+    </div>
+    #end
+   #if($!obj.goodsReturnLogs && $!obj.goodsReturnLogs.size()>0)
+   <div class="orderhhh">退货日志</div>
+    <div class="orderul_record">
+      <ul>
+        <li><strong><em>$!CommUtil.formatLongDate($!obj.addTime)</em></strong>订单：<strong><em>$!obj.of.order_id</em></strong>
+          $!{obj.goods.goods_name}
+          $!{obj.spec_info}
+		  数量:$!{obj.count}</li>
+      </ul>
+    </div>
+    #end
+  </div>
+
+   <div class="orderh">退款信息</div>
+    <div class="orderul">
+      <ul>
+         <li><span class="ordertitle">退款总额:</span><span>¥$!{obj.gr.return_price}</span></li>
+      </ul>
+    </div>
+
+  <div class="submit">
+    <input name="go" type="button" value="确认退款" onclick="dorefund($!obj.id)" />
+    <input name="go" type="button" value="返回" onclick="window.location.href='$!webPath/admin/order_refund_list.htm'" />
+  </div>
+</div>
+</body>
+</html>

@@ -18,7 +18,7 @@ import com.tomowork.oa.domain.IdEntity;
 @Cacheable
 @Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-@Table(name = "res")
+@Table(name = "oa_res")
 public class Res extends IdEntity {
 	private String resName;
 
