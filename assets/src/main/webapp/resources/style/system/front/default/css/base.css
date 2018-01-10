@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+
+.cailiaoPage{ width: auto;
+background-color: transparent;}
+
+.left{ float:left;}
+
+.right{ float:right;}
+
+
+/*页尾------------------------------------------------------------*/
+
+.footer{ width:100%; background-color:#333;}
+
+.footer ul{ width:1200px;  margin:0 auto; overflow:hidden; padding-top:30px;}
+
+.footer ul li{ float:left; margin-right:80px;}
+
+.footer ul h3 a{ color:#ccc; line-height:40px;}
+
+
+.footer ul p a{ color:#888; line-height:25px;}
+
+.footer ul li.footer_follow{ float:right; line-height:30px;  font-size:14px; }
+
+.footer ul li.footer_follow p a{ padding:0 10px; text-align:center; }
+.footer_copyright{ text-align:center; line-height:25px;background-color:#222; padding:15px 0; color:#888;}
+.footer_copyright a{ color:#888; }

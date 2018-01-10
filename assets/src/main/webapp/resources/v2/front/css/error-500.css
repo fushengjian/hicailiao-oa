@@ -1,0 +1,50 @@
+/*500.html和404.html樣式begin*/
+.error_box {height: 242px;margin-top: 140px}
+.error_box {height: 229px\0;margin-top: 130px\0}
+@-moz-document url-prefix() {
+	.error_box {
+		height: 237px;
+		margin-top: 135px
+	}
+}
+.error_box p {text-align: center;font-size: 14px;}
+.error_box p img {margin-bottom: -25px;margin-right: 8px}
+.error_box p:first-child {text-align: center;font-size: 16px;line-height: 70px;margin-bottom: 10px;}
+.error_box a {color: #0f6dcd}
+.error_box a:first-child {margin-right: 20px;}
+
+.regoods{width:797px; overflow:hidden; margin-top:10px; width:100%;}
+.regoods h1{background:#0F3675; width:797px; height:30px; color:#FFF; line-height:30px; width:100%}
+.regoods h1 span{padding-left:20px;}
+.regoods h1 a{float:right; margin-right:10px; color:#FFF;}
+.regoodsshop{width:797px; overflow:hidden; margin-top:10px;}
+.regoodsshop ul{float:left; border:1px solid #ccc; padding:5px; width:245px; float:left; margin-right:3px; margin-left:5px; margin-top:10px;}
+.regoodsshop ul li{width:245px; float:left;}
+.look{float:right; background:url(../images/ckxq.jpg) no-repeat; display:block; width:78px; height:19px; line-height:19px; text-align:center; color:#FFF}
+.regoodsshop .goodslook{margin-top:10px;}
+.regoodsshop .goodslook strong{color:#F30; font-size:18px;}
+.regoodsshop .goodsnames{line-height:20px; margin-top:10px; height:40px;}
+.regoodsshop .goodsnames a{color:#666;}
+.regoodsshop .goodsnames a:hover{color:#39F;}
+.regoodsshop .recentgoodsok{color:#000; margin-top:10px;}
+.regoodsshop .recentgoodsok strong{color:#F30;}
+
+.smallgoods {width: 100%;float: left;}
+.smallgoods {width: 797px;overflow: hidden;margin-top: 10px;}
+.smallgoods{width:797px; overflow:hidden; margin-top:10px;}
+.smallgoods ul{float:left; border:1px solid #ccc; padding:5px; width:178px; float:left; margin-right:4px; margin-left:5px; margin-top:10px;display:inline;}
+.smallgoods ul li{width:178px; float:left;}
+.smallgoods .goodsimgs{width:178px; height:178px;}
+.smallgoods .look{float:right; background:url(../images/ckxq.jpg) no-repeat; display:block; width:60px; height:19px; line-height:19px; text-align:center; color:#FFF}
+.smallgoods .goodslook{ margin-top:10px;}
+.smallgoods .goodslook strong{color:#F30; font-size:18px;}
+.smallgoods .goodsnames{line-height:20px; margin-top:10px; height:40px; word-break: break-all;}
+.smallgoods .goodsnames a{color:#666;}
+.smallgoods .goodsnames a:hover{color:#39F;}
+.smallgoods .recentgoodsok{color:#000; margin-top:10px;}
+.smallgoods .recentgoodsok strong{color:#F30;}
+
+.goods_sp_span{width:178px;height:178px;display:table-cell;*display:block;text-align:center;position:relative;vertical-align:middle;}
+.goods_sp_span p{*position:absolute;top:50%;left:50%;}
+.goods_sp_span p img{*position:relative;top:-50%;left:-50%; z-index:0;}
+/*500.html和404.html樣式end*/

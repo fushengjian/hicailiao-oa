@@ -1,0 +1,27 @@
+/****message_info.html界面的样式****/
+.addnavtable{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+.message span{
+	display: block;
+	margin-bottom: 30px;
+}
+.px10{
+	padding-left:10px;
+}
+.setsub input{
+	background: #1c2088;
+	width: 103px;
+	height: 29px;
+	color: #FFF;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 35px;
+	border: 0px;
+	cursor: pointer
+}
+.hui2{
+	color:#999999
+}

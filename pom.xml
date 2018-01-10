@@ -12,6 +12,7 @@
 		<module>utils</module>
 		<module>base</module>
 		<module>front</module>
+		<module>assets</module>
 	</modules>
 
 	<packaging>pom</packaging>
@@ -112,6 +113,11 @@
 			<dependency>
 				<groupId>com.tomowork.oa</groupId>
 				<artifactId>oa-utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.tomowork.oa</groupId>
+				<artifactId>oa-assets</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

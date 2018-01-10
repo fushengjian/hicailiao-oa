@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+.login {width: 440px;height: 367px;border-radius:5px;border: 5px solid #e0e0e0;behavior: url(htc/pie.htc); z-index:103; position:relative;}
+h2{ background-color:#f3f3f3; line-height:34px; padding-left:20px; font-family:"宋体"}
+.login h2 svg, .login h2 img { float:right; margin-top:7px; margin-right:10px}
+.login_box {width: 350px;height: 340px;background-color:#fff; margin-left:auto; margin-right:auto}
+.login_box .line_box { margin-left: auto;margin-right: auto;height:30px;  margin-top:27px}
+.line_box,.tips, .input,.checkbox{margin-left: auto;margin-right: auto;font-size:14px;width:300px;}
+.login_box .tips {background-color: #fff6d2;border:1px solid #ffe88c;line-height:24px;margin-top:6px}
+.login_box div img {float: left;margin:0px;border-right:1px solid #bbb;}
+.login_box .input {width: 300px;height:37px;border:1px solid #bbb;margin-top:22px;}
+form .input input {width: 250px;height: 22px;outline:none;border:0px;line-height:22px;padding-left:10px;font-size:14px;margin-top:6px;}
+.login_box .checkbox {height: 30px;width:300px;font-size:14px;margin-top:22px;font-family:"宋体";}
+.login_box .checkbox span {float: right;color:#0f3675;}
+.login_box form .botton {width: 300px;line-height: 36px;height: 36px;color: #fff;font-size: 20px;background-color: #0f3675;border: 0px;outline: none;letter-spacing: 16px;padding-left:20px;font-weight:bold;cursor: pointer;}
+.span {border:none;display:block;float:left;font-size:14px;line-height:16px}
+.copy{border:none;display:block;text-align:center;margin-top:5px;width:990px;margin-left:auto;margin-right:auto;font-size:14px;}
+.login_box .tips img {border: none;margin-left: 10px;margin-right: 5px;}
+a:link, a:visited, a:hover, a:active, .red, .black, .blue {text-decoration: none;}
+.login_box .line_box .line_box_1 {display: block;font-size: 20px;float: left;}
+a:link {color: #000;}
+a:visited {color: #000;}
+.line_box a .line_box_2 {float: right;font-size: 14px;margin-top: 5px;color:#0f3675;}
+#copy{width: 380px;margin-left: auto;margin-right: auto;height:20px;}
+form .checkbox .change {float: left;margin-left: 10px;font-size: 12px;line-height:18px;}
+.checkbox a .forget {font-family:"宋体";font-size:12px;}
+form .checkbox .code {float:left; width:90px; height:36px;margin-left:10px;}
+form .checkbox input {width:60px; float:left; height:30px; line-height:20px;padding-left:10px;}

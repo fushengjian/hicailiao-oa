@@ -1,0 +1,14 @@
+.pay_sucess{width: 1200px;margin: 0 auto}
+.pay_sucess>.add-top{padding: 10px 0 18px}
+.pay_cont{background: #f5fbff;padding: 48px 300px 50px;font-family: "Microsoft Yahei";margin: 74px 0 108px;}
+.pay_cont>p{height: 66px;line-height: 66px;}
+.pay_cont>p>img{width: 66px;height: 66px;vertical-align: bottom;}
+.pay_cont>p>span{font-size: 22px;color: #232323;margin-left: 20px}
+.pay_cont>ul{margin-left: 106px}
+.pay_cont li{color: #232323;font-family: "Microsoft Yahei";margin-top: 20px}
+.pay_cont li.pay_way b,.pay_cont li.pay_way>strong{font-weight: normal}
+.pay_cont li.pay_way>strong{margin-left: 42px}
+.pay_cont li.pay_money>b{font-size: 16px;color: #ff0000}
+.pay_cont li>.keep_shop{padding: 5px 12px;background: #ed7f00;color: #fff;border-radius: 2px;margin: 0 10px}
+.pay_cont li>.look_order{text-decoration: underline;color: #4657bf}
+.pay_way>span.obligation{font-size: 16px;color: #ff0000;}

@@ -1,0 +1,307 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>oa</artifactId>
+		<groupId>com.tomowork.oa</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>oa-assets</artifactId>
+	<packaging>war</packaging>
+
+	<!--&lt;!&ndash; 依赖项定义 &ndash;&gt;
+	<dependencies>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.tomowork.oa</groupId>
+			<artifactId>oa-utils</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+
+		&lt;!&ndash; WEB begin &ndash;&gt;
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+		</dependency>
+		&lt;!&ndash; WEB end &ndash;&gt;
+
+		&lt;!&ndash; LOGGING begin &ndash;&gt;
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		&lt;!&ndash; LOGGING end &ndash;&gt;
+
+		&lt;!&ndash; GENERAL UTILS begin &ndash;&gt;
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+
+		&lt;!&ndash; image util &ndash;&gt;
+		<dependency>
+			<groupId>com.drewnoakes</groupId>
+			<artifactId>metadata-extractor</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		&lt;!&ndash; GENERAL UTILS end &ndash;&gt;
+
+		&lt;!&ndash; TEST begin &ndash;&gt;
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<scope>test</scope>
+		</dependency>
+		&lt;!&ndash; TEST end &ndash;&gt;
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>-->
+
+	<profiles>
+		<profile>
+			<id>dev-windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+		</profile>
+		<profile>
+			<id>dev-osx</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+					</resource>
+					<resource>
+						<directory>src/main/resources_unix</directory>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>product</id>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+					</resource>
+					<resource>
+						<directory>src/main/resources_unix</directory>
+					</resource>
+				</resources>
+				<plugins>
+					<!-- war 打包插件, 生产不打包resources/, upload/, WEB-INF/lib/ -->
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<packagingExcludes>resources/**,upload/**,WEB-INF/lib/**</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<build>
+		<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
+		<plugins>
+			<!-- war 打包插件, 不打包 upload -->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes>upload/**</packagingExcludes>
+				</configuration>
+			</plugin>
+
+			<!-- tomcat7插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat-plugin.version}</version>
+				<configuration>
+					<port>8081</port>
+					<path>/</path>
+					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
+					<warFile>${project.build.directory}/${project.artifactId}-${project.version}.war</warFile>
+				</configuration>
+				<!-- override dependencies of tomcat7-maven-plugin -->
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.tomcat.embed</groupId>
+						<artifactId>tomcat-embed-core</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-util</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-coyote</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-api</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-jdbc</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-dbcp</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-servlet-api</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-jsp-api</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-jasper</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-jasper-el</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-el-api</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-catalina</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-tribes</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-catalina-ha</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-annotations-api</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<!-- tomcat i18n too ?? -->
+
+					<!-- not sure we need that -->
+					<dependency>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-juli</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.tomcat.embed</groupId>
+						<artifactId>tomcat-embed-logging-juli</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.tomcat.embed</groupId>
+						<artifactId>tomcat-embed-logging-log4j</artifactId>
+						<version>${tomcat7Version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

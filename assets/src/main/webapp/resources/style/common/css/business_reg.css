@@ -1,0 +1,173 @@
+@charset "utf-8";
+/* CSS Document */
+#middle{
+	height:600px;
+	width: 1201px;
+	background-color: #FFF;
+	font-family: "微软雅黑";
+	font-size: 12px;
+	color: #000;
+}
+#box_line{
+	border-bottom: 1px solid #d6d3d3;
+	width: 849px;
+	height: 88px;
+	font-size: 18px;
+	font-family: "微软雅黑";
+	color: #666;
+	line-height: 17px;
+	text-align: center;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+}
+
+#box_01{
+	position: absolute;
+	border-bottom: 2px solid #ffaa00;
+	left: 566px;
+	top: 273px;
+	height: 27px;
+	width: 148px;
+	color: #ffaa00;
+	}
+#box_02{
+	float: left;
+	margin-top: 60px;
+	margin-left: 464px;
+}
+.box{
+	float: left;
+	 width:789px
+	margin-bottom: 15px;
+	line-height: 42px;
+	height: 42px;
+	font-size: 14px;
+}
+.name_menu{
+	width: 80px;
+	float: left;
+	text-align: right;
+}
+.username, .password, .re_password, .email, .code{
+	font-size: 14px;
+	color: #999;
+/*	position: absolute;
+*/	left: 429px;
+	width: 227px;
+	border: 0px;
+	height: 32px;
+	outline: medium none;
+}
+.username, .password, .re_password, .email{
+	width: 226px;
+}
+.input{
+	border: 1px solid #bbb;
+	height: 40px;
+	width: 330px;
+	float: left;
+	padding-left: 10px;
+}
+.password{
+	top: 416px;
+}
+.re_password{
+	top: 472px;
+}
+.email{
+	top: 529px;
+}
+.code{
+	top: 586px;
+	border: 1px solid #bbb;
+	height: 40px;
+	float: left;
+	width: 240px;
+}
+#input_code{
+	border: 1px solid #bbb;
+	float: left;
+	width: 240px;
+	height: 40px;
+	}
+.code_img{
+	float: left;
+	height: 40px;
+	width: 90px;
+	margin-left: 10px;
+	 
+	display: block;
+	}
+.tips{
+	color: #bbb;
+	display: block;
+	float: left;
+	margin-left: 10px;
+}
+.over{
+	line-height: 42px;
+	display: block;
+	color: #bbb;
+	margin-left:432px;
+}
+#register{
+	width: 576px;
+	margin-left: 338px;
+	margin-top: 51px;
+}
+.border{
+	border:1px solid #bbb;
+	float:left;
+	height:40px;
+	width:460px;}
+#input{
+	width: 415px; 
+	height: 48px; 
+	float:left; 
+	line-height:48px;}
+.input_border{
+	border: 1px solid #bbb;
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	width: 330px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	 }
+
+#agreediv{
+	width: 400px;
+	height: 24px;
+	font-size: 14px;
+	margin-bottom: 20px;
+	margin-left: 80px;
+	float: left;
+}
+#checkbox{
+	float:left;}
+#agreement{
+	float:left; 
+	height:24px; 
+	width:200px; 
+	line-height:24px;}
+#button{
+	width: 330px;
+	height: 50px;
+	margin-left: 80px;
+	float: left;
+}
+.button_button{
+	background-color: #ff9c00;
+	width: 330px;
+	height: 50px;
+	border: 0;
+	font-size: 20px;
+	font-weight: 600;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 50px;
+	float: left;
+	font-family: 微软雅黑;
+}

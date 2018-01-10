@@ -1,0 +1,17 @@
+/****account.html界面的select样式****/
+.select1{
+	 width:160px; height:30px; padding:5px 25px; 
+	 border: 1px solid #E3E3E3; border-radius:8px; 
+	 background:url(../../front/images/a2.jpg) no-repeat scroll right center transparent; 
+	 appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+}
+.select2{
+	height:30px; padding:5px 25px; border: 1px solid #E3E3E3;
+	border-radius:8px;
+	background:url(../../front/images/a2.jpg) no-repeat scroll right center transparent;
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+}
