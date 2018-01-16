@@ -95,6 +95,8 @@
 
 		<!-- QRCode -->
 		<QRCode.version>3.3.0</QRCode.version>
+
+		<httpclient.version>4.4.1</httpclient.version>
 	</properties>
 
 	<!-- 依赖项定义 -->
@@ -798,6 +800,12 @@
 				<groupId>com.google.zxing</groupId>
 				<artifactId>javase</artifactId>
 				<version>${QRCode.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
