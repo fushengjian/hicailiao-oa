@@ -111,19 +111,19 @@ public class SysConfig extends IdEntity {
 
 	private String imageWebServer; //图片服务器  （可使用ftp）
 
-	private int imageFilesize; //图片文件大小
+	private int imageFilesize; //文件大小
 
-	private int smallWidth; //商品小图宽度
+	private int smallWidth; //小图宽度
 
-	private int smallHeight; //商品小图高度
+	private int smallHeight; //小图高度
 
-	private int middleWidth; //商品中图宽度
+	private int middleWidth; //中图宽度
 
-	private int middleHeight; //商品中图高度
+	private int middleHeight; //中图高度
 
-	private int bigWidth; //商品大图宽度
+	private int bigWidth; //大图宽度
 
-	private int bigHeight; //商品大图高度
+	private int bigHeight; //大图高度
 
 	private boolean integral; //会员积分管理  为0禁用  为1开启
 

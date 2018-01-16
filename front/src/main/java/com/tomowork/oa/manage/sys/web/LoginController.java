@@ -1,12 +1,6 @@
 package com.tomowork.oa.manage.sys.web;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Map;
 
@@ -17,7 +11,6 @@ import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +20,6 @@ import com.google.common.collect.Maps;
 import com.tomowork.oa.manage.common.config.Global;
 import com.tomowork.oa.manage.common.utils.CacheUtils;
 import com.tomowork.oa.manage.common.utils.CookieUtils;
-import com.tomowork.oa.manage.common.utils.StringUtils;
 import com.tomowork.oa.manage.common.web.BaseController;
 import com.tomowork.oa.manage.sys.entity.ManageUser;
 import com.tomowork.oa.manage.sys.utils.UserUtils;
@@ -122,20 +114,6 @@ public class LoginController extends BaseController {
 	}
 
 	/**
-	 * 获取主题方案
-	 */
-	@RequestMapping (value = "/theme/{theme}.do")
-	public String getThemeInCookie(@PathVariable String theme,
-			HttpServletRequest request, HttpServletResponse response) {
-		if (StringUtils.isNotBlank(theme)) {
-			CookieUtils.setCookie(response, "theme", theme);
-		} else {
-			theme = CookieUtils.getCookie(request, "theme");
-		}
-		return "redirect:" + request.getParameter("url");
-	}
-
-	/**
 	 * 是否是验证码登录
 	 *
 	 * @param useruame
@@ -167,32 +145,5 @@ public class LoginController extends BaseController {
 			loginFailMap.remove(useruame);
 		}
 		return loginFailNum >= 3;
-	}
-
-	@RequestMapping ("${adminPath}/download.do")
-	public String download(@RequestParam String filePath,
-			HttpServletResponse response) {
-		File file = new File(filePath);
-		InputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(filePath);
-			response.reset();
-			response.setContentType("application/octet-stream;charset=UTF-8");
-			response.setHeader("Content-Disposition", "attachment; filename=\""
-					+ file.getName() + "\"");
-			OutputStream outputStream = new BufferedOutputStream(
-					response.getOutputStream());
-			byte[] data = new byte[1024];
-			while (inputStream.read(data, 0, 1024) >= 0) {
-				outputStream.write(data);
-			}
-			outputStream.flush();
-			inputStream.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

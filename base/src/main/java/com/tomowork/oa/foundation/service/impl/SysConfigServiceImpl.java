@@ -46,7 +46,7 @@ public class SysConfigServiceImpl implements SysConfigService {
 				sc.setCloseReason("系统维护中...");
 			}
 			if ((sc.getTitle() == null) || (sc.getTitle().equals(""))) {
-				sc.setTitle("采料网多用户商城系统V1.0");
+				sc.setTitle("采料科技OA系统V1.0");
 			}
 			if ((sc.getImageSaveType() == null)
 					|| (sc.getImageSaveType().equals(""))) {
@@ -106,9 +106,9 @@ public class SysConfigServiceImpl implements SysConfigService {
 		}
 		SysConfig sc = new SysConfig();
 		sc.setUploadFilePath("upload");
-		sc.setWebsiteName("采料网");
+		sc.setWebsiteName("采料科技");
 		sc.setSysLanguage("zh_cn");
-		sc.setTitle("采料网");
+		sc.setTitle("采料科技");
 		sc.setSecurityCodeType("normal");
 		sc.setEmailEnable(true);
 		sc.setCloseReason("系统维护中...");
