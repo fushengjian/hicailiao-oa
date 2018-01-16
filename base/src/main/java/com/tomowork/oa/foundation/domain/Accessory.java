@@ -30,7 +30,6 @@ public class Accessory extends IdEntity implements Serializable {
 	 */
 	private String displayName;
 
-
 	/**
 	 * 图片存储名称
 	 */
@@ -66,8 +65,8 @@ public class Accessory extends IdEntity implements Serializable {
 	/**
 	 * 图片所属用户
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	private User user;
+	/*@ManyToOne(fetch = FetchType.LAZY)
+	private User user;*/
 
 	/**
 	 *  所属相册ID
@@ -109,13 +108,13 @@ public class Accessory extends IdEntity implements Serializable {
 		this.goods_list = goods_list;
 	}*/
 
-	public User getUser() {
+	/*public User getUser() {
 		return this.user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 
 	public String getInfo() {
 		return this.info;

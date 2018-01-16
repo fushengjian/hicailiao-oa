@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tomowork.oa.core.security.support.SecurityUserHolder;
 import com.tomowork.oa.core.tools.CommUtil;
 import com.tomowork.oa.core.tools.HttpInclude;
 import com.tomowork.oa.foundation.domain.SysConfig;
-import com.tomowork.oa.foundation.domain.UserConfig;
 import com.tomowork.oa.mv.Model;
 import com.tomowork.oa.view.web.tools.ImageViewTools;
 
@@ -21,7 +19,7 @@ public class JModelAndView extends ModelAndView implements Model {
 		super.setViewName(viewName);
 	}
 
-	public JModelAndView(String viewName, SysConfig config, UserConfig uconfig,
+	public JModelAndView(String viewName, SysConfig config,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		String webPath = CommUtil.getURL(request);
@@ -32,7 +30,6 @@ public class JModelAndView extends ModelAndView implements Model {
 		super.addObject("webPath", webPath);
 		super.addObject("config", config);
 		//super.addObject("uconfig", uconfig);
-		super.addObject("user", SecurityUserHolder.getCurrentUser());
 		super.addObject("httpInclude", new HttpInclude(request, response));
 		String query_url = "";
 		if ((request.getQueryString() != null)
@@ -45,7 +42,6 @@ public class JModelAndView extends ModelAndView implements Model {
 
 		super.addObject("imageViewTools", ImageViewTools.getInstance());
 
-		// 静态资源 by hzl 2015/8/15
 		String miscWebServer = config.getMiscWebServer();
 		if (miscWebServer == null || miscWebServer.trim().isEmpty()) {
 			miscWebServer = webPath;
@@ -59,7 +55,7 @@ public class JModelAndView extends ModelAndView implements Model {
 		super.addObject("miscWebServer", miscWebServer);
 	}
 
-	public JModelAndView(String viewName, SysConfig config, UserConfig uconfig,
+	public JModelAndView(String viewName, SysConfig config,
 			int type, HttpServletRequest request, HttpServletResponse response) {
 		if (config.getSysLanguage() != null) {
 			if (config.getSysLanguage().equals("zh_cn")) {
@@ -99,7 +95,6 @@ public class JModelAndView extends ModelAndView implements Model {
 
 		super.addObject("config", config);
 		//super.addObject("uconfig", uconfig);
-		super.addObject("user", SecurityUserHolder.getCurrentUser());
 		super.addObject("httpInclude", new HttpInclude(request, response));
 		String query_url = "";
 		if ((request.getQueryString() != null)

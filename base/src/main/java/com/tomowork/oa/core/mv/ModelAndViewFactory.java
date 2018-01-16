@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.tomowork.oa.core.tools.CommUtil;
 import com.tomowork.oa.foundation.service.SysConfigService;
-import com.tomowork.oa.foundation.service.UserConfigService;
 
 @Named
 public class ModelAndViewFactory {
@@ -16,9 +15,6 @@ public class ModelAndViewFactory {
 
 	@Inject
 	private SysConfigService configService;
-
-	@Inject
-	private UserConfigService userConfigService;
 
 
 	public static JModelAndView createModelAndView(String viewName) {
@@ -49,11 +45,11 @@ public class ModelAndViewFactory {
 	}
 
 	private JModelAndView _getModelAndView(String viewName, HttpServletRequest request, HttpServletResponse response) {
-		return new JModelAndView(viewName, configService.getSysConfig(), userConfigService.getUserConfig(), request, response);
+		return new JModelAndView(viewName, configService.getSysConfig(), request, response);
 	}
 
 	private JModelAndView _getModelAndView(String viewName, int type, HttpServletRequest request, HttpServletResponse response) {
-		return new JModelAndView(viewName, configService.getSysConfig(), userConfigService.getUserConfig(), type, request, response);
+		return new JModelAndView(viewName, configService.getSysConfig(), type, request, response);
 	}
 
 	@PostConstruct
