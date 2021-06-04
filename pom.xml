@@ -96,7 +96,7 @@
 		<!-- QRCode -->
 		<QRCode.version>3.3.0</QRCode.version>
 
-		<httpclient.version>4.4.1</httpclient.version>
+		<httpclient.version>4.5.13</httpclient.version>
 	</properties>
 
 	<!-- 依赖项定义 -->
